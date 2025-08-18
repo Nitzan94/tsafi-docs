@@ -1,0 +1,737 @@
+<!DOCTYPE html>
+<html lang="he" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>יצירת מסמך חדש - קליניקת צפי</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Heebo:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <script src="https://unpkg.com/lucide@latest/dist/umd/lucide.min.js"></script>
+    
+    <style>
+        :root {
+            --primary: #2563EB;
+            --secondary: #10B981;
+            --success: #059669;
+            --warning: #F59E0B;
+            --error: #DC2626;
+            --background: #FFFFFF;
+            --cards: #F9FAFB;
+            --text: #111827;
+            --borders: #E5E7EB;
+            --shadow: 0 1px 3px 0 rgb(0 0 0 / 0.1), 0 1px 2px -1px rgb(0 0 0 / 0.1);
+            --shadow-lg: 0 10px 15px -3px rgb(0 0 0 / 0.1), 0 4px 6px -4px rgb(0 0 0 / 0.1);
+        }
+        
+        * {
+            font-family: 'Heebo', sans-serif !important;
+        }
+        
+        body {
+            background-color: var(--background) !important;
+            color: var(--text) !important;
+            font-size: 18px !important;
+            line-height: 1.6 !important;
+        }
+        
+        .btn-primary {
+            background-color: var(--primary) !important;
+            color: white !important;
+            padding: 16px 24px !important;
+            border-radius: 8px !important;
+            font-size: 16px !important;
+            font-weight: 600 !important;
+            border: none !important;
+            cursor: pointer !important;
+            transition: all 0.2s ease !important;
+            box-shadow: var(--shadow) !important;
+        }
+        
+        .btn-primary:hover {
+            background-color: #1d4ed8 !important;
+            box-shadow: var(--shadow-lg) !important;
+            transform: translateY(-1px) !important;
+        }
+        
+        .btn-secondary {
+            background-color: var(--secondary) !important;
+            color: white !important;
+            padding: 12px 20px !important;
+            border-radius: 6px !important;
+            font-size: 14px !important;
+            font-weight: 500 !important;
+            border: none !important;
+            cursor: pointer !important;
+            transition: all 0.2s ease !important;
+            box-shadow: var(--shadow) !important;
+        }
+        
+        .btn-secondary:hover {
+            background-color: #047857 !important;
+            box-shadow: var(--shadow-lg) !important;
+        }
+        
+        .btn-outline {
+            background-color: white !important;
+            color: var(--primary) !important;
+            padding: 12px 20px !important;
+            border: 2px solid var(--primary) !important;
+            border-radius: 6px !important;
+            font-size: 14px !important;
+            font-weight: 500 !important;
+            cursor: pointer !important;
+            transition: all 0.2s ease !important;
+        }
+        
+        .btn-outline:hover {
+            background-color: var(--primary) !important;
+            color: white !important;
+        }
+        
+        .btn-large {
+            background-color: var(--primary) !important;
+            color: white !important;
+            padding: 20px 32px !important;
+            border-radius: 12px !important;
+            font-size: 18px !important;
+            font-weight: 600 !important;
+            border: none !important;
+            cursor: pointer !important;
+            transition: all 0.2s ease !important;
+            box-shadow: var(--shadow-lg) !important;
+            min-height: 64px !important;
+        }
+        
+        .btn-large:hover {
+            background-color: #1d4ed8 !important;
+            transform: translateY(-2px) !important;
+        }
+        
+        .card {
+            background-color: white !important;
+            border-radius: 12px !important;
+            padding: 24px !important;
+            box-shadow: var(--shadow) !important;
+            border: 1px solid var(--borders) !important;
+            transition: all 0.2s ease !important;
+        }
+        
+        .card:hover {
+            box-shadow: var(--shadow-lg) !important;
+            transform: translateY(-2px) !important;
+        }
+        
+        .header {
+            background-color: white !important;
+            border-bottom: 1px solid var(--borders) !important;
+            padding: 24px 0 !important;
+            box-shadow: var(--shadow) !important;
+        }
+        
+        .input-field {
+            width: 100% !important;
+            padding: 16px 20px !important;
+            border-radius: 8px !important;
+            border: 2px solid var(--borders) !important;
+            font-size: 18px !important;
+            transition: all 0.2s ease !important;
+            background-color: white !important;
+        }
+        
+        .input-field:focus {
+            outline: none !important;
+            border-color: var(--primary) !important;
+            box-shadow: 0 0 0 3px rgb(37 99 235 / 0.1) !important;
+        }
+        
+        .textarea-field {
+            width: 100% !important;
+            padding: 16px 20px !important;
+            border-radius: 8px !important;
+            border: 2px solid var(--borders) !important;
+            font-size: 16px !important;
+            transition: all 0.2s ease !important;
+            background-color: white !important;
+            min-height: 120px !important;
+            resize: vertical !important;
+        }
+        
+        .textarea-field:focus {
+            outline: none !important;
+            border-color: var(--primary) !important;
+            box-shadow: 0 0 0 3px rgb(37 99 235 / 0.1) !important;
+        }
+        
+        .progress-bar {
+            background-color: #E5E7EB !important;
+            border-radius: 8px !important;
+            height: 8px !important;
+            overflow: hidden !important;
+        }
+        
+        .progress-fill {
+            background-color: var(--primary) !important;
+            height: 100% !important;
+            transition: width 0.3s ease !important;
+        }
+        
+        .step-indicator {
+            display: flex !important;
+            align-items: center !important;
+            justify-content: center !important;
+            width: 32px !important;
+            height: 32px !important;
+            border-radius: 50% !important;
+            font-weight: 600 !important;
+            font-size: 14px !important;
+            transition: all 0.3s ease !important;
+        }
+        
+        .step-indicator.active {
+            background-color: var(--primary) !important;
+            color: white !important;
+        }
+        
+        .step-indicator.completed {
+            background-color: var(--secondary) !important;
+            color: white !important;
+        }
+        
+        .step-indicator.inactive {
+            background-color: #E5E7EB !important;
+            color: #6B7280 !important;
+        }
+        
+        .preview-area {
+            background-color: #F9FAFB !important;
+            border: 2px dashed var(--borders) !important;
+            border-radius: 12px !important;
+            padding: 32px !important;
+            min-height: 400px !important;
+        }
+        
+        .document-preview {
+            background-color: white !important;
+            border-radius: 8px !important;
+            padding: 24px !important;
+            box-shadow: var(--shadow) !important;
+            border: 1px solid var(--borders) !important;
+            max-height: 500px !important;
+            overflow-y: auto !important;
+        }
+        
+        .form-row {
+            display: grid !important;
+            grid-template-columns: 1fr 1fr !important;
+            gap: 16px !important;
+            margin-bottom: 16px !important;
+        }
+        
+        .form-full {
+            grid-column: 1 / -1 !important;
+        }
+        
+        .auto-save-indicator {
+            color: var(--secondary) !important;
+            font-size: 14px !important;
+            font-weight: 500 !important;
+            display: flex !important;
+            align-items: center !important;
+            gap: 6px !important;
+        }
+        
+        .split-layout {
+            display: grid !important;
+            grid-template-columns: 1fr 1fr !important;
+            gap: 32px !important;
+            height: calc(100vh - 200px) !important;
+        }
+        
+        @media (max-width: 1024px) {
+            .split-layout {
+                grid-template-columns: 1fr !important;
+                height: auto !important;
+            }
+            
+            .form-row {
+                grid-template-columns: 1fr !important;
+            }
+        }
+    </style>
+</head>
+<body class="min-h-screen bg-gray-50">
+
+    <!-- Header -->
+    <header class="header">
+        <div class="max-w-7xl mx-auto px-8">
+            <div class="flex justify-between items-center">
+                <div class="flex items-center gap-6">
+                    <button class="btn-outline flex items-center gap-2">
+                        <i data-lucide="arrow-right" class="w-4 h-4"></i>
+                        חזרה
+                    </button>
+                    <h1 class="text-2xl font-bold !mb-0">📝 יצירת מסמך חדש</h1>
+                </div>
+                <div class="flex items-center gap-4">
+                    <div class="auto-save-indicator">
+                        <i data-lucide="check-circle" class="w-4 h-4"></i>
+                        נשמר אוטומטית
+                    </div>
+                    <button class="btn-large">
+                        <i data-lucide="save" class="w-5 h-5 ml-2"></i>
+                        שמירה וייצוא
+                    </button>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Progress Steps -->
+    <div class="bg-white border-b border-gray-200 py-6">
+        <div class="max-w-7xl mx-auto px-8">
+            <div class="flex items-center justify-between">
+                <div class="flex items-center gap-4">
+                    <div class="step-indicator completed">✓</div>
+                    <span class="font-medium text-gray-600">בחירת מטופל</span>
+                </div>
+                <div class="flex-1 h-1 bg-gray-200 mx-4">
+                    <div class="h-full bg-blue-600 w-1/2"></div>
+                </div>
+                <div class="flex items-center gap-4">
+                    <div class="step-indicator completed">✓</div>
+                    <span class="font-medium text-gray-600">בחירת טמפלייט</span>
+                </div>
+                <div class="flex-1 h-1 bg-gray-200 mx-4">
+                    <div class="h-full bg-blue-600 w-full"></div>
+                </div>
+                <div class="flex items-center gap-4">
+                    <div class="step-indicator active">3</div>
+                    <span class="font-medium text-blue-600">מילוי מסמך</span>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Patient & Template Info Bar -->
+    <div class="bg-blue-50 border-b border-blue-200 py-4">
+        <div class="max-w-7xl mx-auto px-8">
+            <div class="flex items-center justify-between">
+                <div class="flex items-center gap-6">
+                    <div class="flex items-center gap-2">
+                        <i data-lucide="user" class="w-5 h-5 text-blue-600"></i>
+                        <span class="font-medium">מטופל:</span>
+                        <span class="text-blue-700 font-semibold">רחל כהן</span>
+                    </div>
+                    <div class="flex items-center gap-2">
+                        <i data-lucide="file-text" class="w-5 h-5 text-blue-600"></i>
+                        <span class="font-medium">טמפלייט:</span>
+                        <span class="text-blue-700 font-semibold">דוח טיפול</span>
+                    </div>
+                    <div class="flex items-center gap-2">
+                        <i data-lucide="calendar" class="w-5 h-5 text-blue-600"></i>
+                        <span class="font-medium">תאריך:</span>
+                        <span class="text-blue-700 font-semibold">17/08/2025</span>
+                    </div>
+                </div>
+                <button class="btn-outline text-sm">
+                    <i data-lucide="edit" class="w-4 h-4 ml-1"></i>
+                    שנה בחירה
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Main Content -->
+    <main class="max-w-7xl mx-auto px-8 py-8">
+        
+        <!-- Split Layout: Form + Preview -->
+        <div class="split-layout">
+            
+            <!-- Form Section -->
+            <div class="space-y-6">
+                <div class="card">
+                    <h3 class="text-xl font-semibold mb-6 flex items-center gap-2">
+                        <i data-lucide="edit-3" class="w-5 h-5 text-blue-600"></i>
+                        מילוי מסמך
+                    </h3>
+
+                    <form class="space-y-6">
+                        
+                        <!-- Treatment Date -->
+                        <div>
+                            <label class="block text-sm font-medium mb-2">📅 תאריך הטיפול</label>
+                            <input 
+                                type="date" 
+                                class="input-field" 
+                                value="2025-08-17"
+                            >
+                        </div>
+
+                        <!-- Treatment Goals -->
+                        <div>
+                            <label class="block text-sm font-medium mb-2">🎯 מטרות הטיפול</label>
+                            <textarea 
+                                class="textarea-field" 
+                                placeholder="תאר את מטרות הטיפול עבור המטופל..."
+                                rows="3"
+                            >שיפור תנועתיות בגב התחתון והפחתת כאב כרוני</textarea>
+                        </div>
+
+                        <!-- Activities Performed -->
+                        <div>
+                            <label class="block text-sm font-medium mb-2">🏃 פעילויות שבוצעו</label>
+                            <textarea 
+                                class="textarea-field" 
+                                placeholder="פרט את הפעילויות והתרגילים שבוצעו בטיפול..."
+                                rows="4"
+                            >1. תרגילי חימום ומתיחות לגב התחתון
+2. חיזוק שרירי הליבה - 3 סטים של 15 חזרות
+3. תרגילי יציבות על כדור פיזיו
+4. מסאג' רקמות רכות באזור הגב התחתון
+5. הדרכה על יציבות נכונה בישיבה</textarea>
+                        </div>
+
+                        <!-- Progress Assessment -->
+                        <div>
+                            <label class="block text-sm font-medium mb-2">📈 הערכת התקדמות</label>
+                            <div class="form-row">
+                                <div>
+                                    <label class="block text-xs text-gray-600 mb-1">רמת כאב (1-10)</label>
+                                    <select class="input-field">
+                                        <option value="">בחר רמה</option>
+                                        <option value="1">1 - ללא כאב</option>
+                                        <option value="2">2 - כאב קל מאוד</option>
+                                        <option value="3">3 - כאב קל</option>
+                                        <option value="4" selected>4 - כאב בינוני-קל</option>
+                                        <option value="5">5 - כאב בינוני</option>
+                                        <option value="6">6 - כאב בינוני-חזק</option>
+                                        <option value="7">7 - כאב חזק</option>
+                                        <option value="8">8 - כאב חזק מאוד</option>
+                                        <option value="9">9 - כאב עז</option>
+                                        <option value="10">10 - כאב בלתי נסבל</option>
+                                    </select>
+                                </div>
+                                <div>
+                                    <label class="block text-xs text-gray-600 mb-1">שיפור כללי</label>
+                                    <select class="input-field">
+                                        <option value="">בחר מצב</option>
+                                        <option value="excellent">שיפור משמעותי</option>
+                                        <option value="good" selected>שיפור טוב</option>
+                                        <option value="moderate">שיפור מתון</option>
+                                        <option value="slight">שיפור קל</option>
+                                        <option value="none">ללא שיפור</option>
+                                        <option value="worse">הרעה</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <textarea 
+                                class="textarea-field mt-3" 
+                                placeholder="הערות נוספות על ההתקדמות..."
+                                rows="2"
+                            >המטופלת מדווחת על שיפור ניכר בכאב והגברת התנועתיות. יכולה לשבת למשך זמן ארוך יותר ללא כאב.</textarea>
+                        </div>
+
+                        <!-- Recommendations -->
+                        <div>
+                            <label class="block text-sm font-medium mb-2">📋 המליצות לטיפול הבא</label>
+                            <textarea 
+                                class="textarea-field" 
+                                placeholder="רשום המליצות למטופל..."
+                                rows="3"
+                            >1. המשך ביצוע תרגילי חיזוק בבית 3 פעמים בשבוע
+2. שמירה על יציבה נכונה במהלך היום
+3. הפסקות קצרות מישיבה כל 30 דקות
+4. שימוש בחום על האזור לפני תרגילים</textarea>
+                        </div>
+
+                        <!-- Next Appointment -->
+                        <div>
+                            <label class="block text-sm font-medium mb-2">📅 מועד הטיפול הבא</label>
+                            <div class="form-row">
+                                <input 
+                                    type="date" 
+                                    class="input-field" 
+                                    value="2025-08-24"
+                                >
+                                <input 
+                                    type="time" 
+                                    class="input-field" 
+                                    value="14:00"
+                                >
+                            </div>
+                        </div>
+
+                        <!-- Additional Notes -->
+                        <div>
+                            <label class="block text-sm font-medium mb-2">📝 הערות נוספות</label>
+                            <textarea 
+                                class="textarea-field" 
+                                placeholder="הערות נוספות או מידע רלוונטי..."
+                                rows="2"
+                            >המטופלת הביעה שביעות רצון מהטיפול ומחויבת להמליצות.</textarea>
+                        </div>
+
+                    </form>
+                </div>
+
+                <!-- Action Buttons -->
+                <div class="flex gap-4">
+                    <button class="btn-outline flex-1">
+                        <i data-lucide="save" class="w-4 h-4 ml-2"></i>
+                        שמירה כטיוטה
+                    </button>
+                    <button class="btn-large flex-1">
+                        <i data-lucide="download" class="w-4 h-4 ml-2"></i>
+                        שמירה וייצוא למחשב
+                    </button>
+                </div>
+            </div>
+
+            <!-- Preview Section -->
+            <div class="space-y-6">
+                <div class="card">
+                    <h3 class="text-xl font-semibold mb-6 flex items-center gap-2">
+                        <i data-lucide="eye" class="w-5 h-5 text-blue-600"></i>
+                        תצוגה מקדימה
+                    </h3>
+
+                    <div class="document-preview">
+                        <div class="text-center mb-6">
+                            <h2 class="text-2xl font-bold text-gray-800">🏥 קליניקת צפי לפיזיותרפיה</h2>
+                            <p class="text-gray-600 mt-1">דוח טיפול פיזיותרפי</p>
+                        </div>
+
+                        <div class="border-b border-gray-200 pb-4 mb-4">
+                            <h3 class="font-semibold text-lg mb-2">פרטי מטופל</h3>
+                            <div class="grid grid-cols-2 gap-4 text-sm">
+                                <div><strong>שם המטופל:</strong> רחל כהן</div>
+                                <div><strong>תאריך טיפול:</strong> 17/08/2025</div>
+                                <div><strong>ת.ז.:</strong> 123456789</div>
+                                <div><strong>טלפון:</strong> 054-1234567</div>
+                            </div>
+                        </div>
+
+                        <div class="space-y-4">
+                            <div>
+                                <h4 class="font-semibold mb-2">🎯 מטרות הטיפול</h4>
+                                <p class="text-gray-700">שיפור תנועתיות בגב התחתון והפחתת כאב כרוני</p>
+                            </div>
+
+                            <div>
+                                <h4 class="font-semibold mb-2">🏃 פעילויות שבוצעו</h4>
+                                <div class="text-gray-700 space-y-1">
+                                    <p>1. תרגילי חימום ומתיחות לגב התחתון</p>
+                                    <p>2. חיזוק שרירי הליבה - 3 סטים של 15 חזרות</p>
+                                    <p>3. תרגילי יציבות על כדור פיזיו</p>
+                                    <p>4. מסאג' רקמות רכות באזור הגב התחתון</p>
+                                    <p>5. הדרכה על יציבות נכונה בישיבה</p>
+                                </div>
+                            </div>
+
+                            <div>
+                                <h4 class="font-semibold mb-2">📈 הערכת התקדמות</h4>
+                                <div class="grid grid-cols-2 gap-4 mb-2">
+                                    <div><strong>רמת כאב:</strong> 4/10</div>
+                                    <div><strong>שיפור כללי:</strong> שיפור טוב</div>
+                                </div>
+                                <p class="text-gray-700">המטופלת מדווחת על שיפור ניכר בכאב והגברת התנועתיות. יכולה לשבת למשך זמן ארוך יותר ללא כאב.</p>
+                            </div>
+
+                            <div>
+                                <h4 class="font-semibold mb-2">📋 המליצות לטיפול הבא</h4>
+                                <div class="text-gray-700 space-y-1">
+                                    <p>1. המשך ביצוע תרגילי חיזוק בבית 3 פעמים בשבוע</p>
+                                    <p>2. שמירה על יציבה נכונה במהלך היום</p>
+                                    <p>3. הפסקות קצרות מישיבה כל 30 דקות</p>
+                                    <p>4. שימוש בחום על האזור לפני תרגילים</p>
+                                </div>
+                            </div>
+
+                            <div>
+                                <h4 class="font-semibold mb-2">📅 מועד הטיפול הבא</h4>
+                                <p class="text-gray-700">24/08/2025 בשעה 14:00</p>
+                            </div>
+
+                            <div>
+                                <h4 class="font-semibold mb-2">📝 הערות נוספות</h4>
+                                <p class="text-gray-700">המטופלת הביעה שביעות רצון מהטיפול ומחויבת להמליצות.</p>
+                            </div>
+                        </div>
+
+                        <div class="border-t border-gray-200 pt-4 mt-6 text-center text-sm text-gray-500">
+                            <p>דוח זה נוצר באמצעות מערכת ניהול מסמכים - קליניקת צפי</p>
+                            <p>תאריך הפקה: 17/08/2025</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Export Options -->
+                <div class="card">
+                    <h3 class="text-lg font-semibold mb-4">📤 אפשרויות ייצוא</h3>
+                    <div class="space-y-3">
+                        <button class="w-full btn-primary flex items-center justify-center gap-2">
+                            <i data-lucide="file-text" class="w-4 h-4"></i>
+                            ייצוא ל-PDF
+                        </button>
+                        <button class="w-full btn-outline flex items-center justify-center gap-2">
+                            <i data-lucide="file-edit" class="w-4 h-4"></i>
+                            ייצוא ל-Word
+                        </button>
+                        <button class="w-full btn-outline flex items-center justify-center gap-2">
+                            <i data-lucide="printer" class="w-4 h-4"></i>
+                            הדפסה ישירה
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+
+    </main>
+
+    <script>
+        // Initialize Lucide icons
+        lucide.createIcons();
+        
+        // Auto-save functionality simulation
+        let autoSaveInterval;
+        const autoSaveIndicator = document.querySelector('.auto-save-indicator');
+        
+        function updateAutoSaveIndicator(status) {
+            const icon = autoSaveIndicator.querySelector('i');
+            const text = autoSaveIndicator.querySelector('span') || autoSaveIndicator.childNodes[2];
+            
+            if (status === 'saving') {
+                icon.setAttribute('data-lucide', 'loader');
+                if (text) text.textContent = 'שומר...';
+                autoSaveIndicator.style.color = '#F59E0B';
+            } else {
+                icon.setAttribute('data-lucide', 'check-circle');
+                if (text) text.textContent = 'נשמר אוטומטית';
+                autoSaveIndicator.style.color = '#10B981';
+            }
+            lucide.createIcons();
+        }
+        
+        // Auto-save when form inputs change
+        document.querySelectorAll('input, textarea, select').forEach(input => {
+            input.addEventListener('input', function() {
+                clearTimeout(autoSaveInterval);
+                updateAutoSaveIndicator('saving');
+                
+                autoSaveInterval = setTimeout(() => {
+                    updateAutoSaveIndicator('saved');
+                    updatePreview();
+                }, 1000);
+            });
+        });
+        
+        // Update preview in real-time
+        function updatePreview() {
+            const previewDocument = document.querySelector('.document-preview');
+            // Here you would update the preview based on form values
+            // This is a simplified version
+        }
+        
+        // Form validation
+        function validateForm() {
+            const requiredFields = document.querySelectorAll('input[required], textarea[required]');
+            let isValid = true;
+            
+            requiredFields.forEach(field => {
+                if (!field.value.trim()) {
+                    field.style.borderColor = '#DC2626';
+                    isValid = false;
+                } else {
+                    field.style.borderColor = '#E5E7EB';
+                }
+            });
+            
+            return isValid;
+        }
+        
+        // Handle save and export
+        document.querySelectorAll('.btn-large, .btn-primary').forEach(button => {
+            button.addEventListener('click', function(e) {
+                if (this.textContent.includes('ייצוא') || this.textContent.includes('שמירה')) {
+                    e.preventDefault();
+                    
+                    if (validateForm()) {
+                        // Show success message
+                        const originalText = this.textContent;
+                        this.textContent = '✓ נשמר בהצלחה';
+                        this.style.backgroundColor = '#10B981';
+                        
+                        setTimeout(() => {
+                            this.textContent = originalText;
+                            this.style.backgroundColor = '';
+                        }, 2000);
+                    } else {
+                        alert('אנא מלא את כל השדות הנדרשים');
+                    }
+                }
+            });
+        });
+        
+        // Smooth animations for form elements
+        document.addEventListener('DOMContentLoaded', function() {
+            const cards = document.querySelectorAll('.card');
+            cards.forEach((card, index) => {
+                card.style.opacity = '0';
+                card.style.transform = 'translateY(20px)';
+                setTimeout(() => {
+                    card.style.transition = 'all 0.5s ease';
+                    card.style.opacity = '1';
+                    card.style.transform = 'translateY(0)';
+                }, index * 100);
+            });
+        });
+        
+        // Keyboard shortcuts
+        document.addEventListener('keydown', function(e) {
+            // Ctrl/Cmd + S for save
+            if ((e.ctrlKey || e.metaKey) && e.key === 's') {
+                e.preventDefault();
+                const saveButton = document.querySelector('.btn-large');
+                saveButton.click();
+            }
+            
+            // Ctrl/Cmd + Enter for quick save
+            if ((e.ctrlKey || e.metaKey) && e.key === 'Enter') {
+                e.preventDefault();
+                updateAutoSaveIndicator('saving');
+                setTimeout(() => updateAutoSaveIndicator('saved'), 500);
+            }
+        });
+        
+        // Improve textarea experience
+        document.querySelectorAll('textarea').forEach(textarea => {
+            textarea.addEventListener('keydown', function(e) {
+                // Tab for moving to next field instead of inserting tab
+                if (e.key === 'Tab' && !e.shiftKey) {
+                    e.preventDefault();
+                    const formElements = Array.from(document.querySelectorAll('input, textarea, select'));
+                    const currentIndex = formElements.indexOf(this);
+                    const nextElement = formElements[currentIndex + 1];
+                    if (nextElement) {
+                        nextElement.focus();
+                    }
+                }
+            });
+            
+            // Auto-resize textarea
+            textarea.addEventListener('input', function() {
+                this.style.height = 'auto';
+                this.style.height = this.scrollHeight + 'px';
+            });
+        });
+        
+        // Initialize auto-resize for existing content
+        document.querySelectorAll('textarea').forEach(textarea => {
+            textarea.style.height = 'auto';
+            textarea.style.height = textarea.scrollHeight + 'px';
+        });
+    </script>
+
+</body>
+</html>

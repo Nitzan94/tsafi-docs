@@ -1,0 +1,371 @@
+<!DOCTYPE html>
+<html lang="he" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>קליניקת צפי - ניהול מסמכים</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Heebo:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <script src="https://unpkg.com/lucide@latest/dist/umd/lucide.min.js"></script>
+    
+    <style>
+        :root {
+            --primary: #2563EB;
+            --secondary: #10B981;
+            --success: #059669;
+            --warning: #F59E0B;
+            --error: #DC2626;
+            --background: #FFFFFF;
+            --cards: #F9FAFB;
+            --text: #111827;
+            --borders: #E5E7EB;
+            --shadow: 0 1px 3px 0 rgb(0 0 0 / 0.1), 0 1px 2px -1px rgb(0 0 0 / 0.1);
+            --shadow-lg: 0 10px 15px -3px rgb(0 0 0 / 0.1), 0 4px 6px -4px rgb(0 0 0 / 0.1);
+        }
+        
+        * {
+            font-family: 'Heebo', sans-serif !important;
+        }
+        
+        body {
+            background-color: var(--background) !important;
+            color: var(--text) !important;
+            font-size: 18px !important;
+            line-height: 1.6 !important;
+        }
+        
+        .btn-primary {
+            background-color: var(--primary) !important;
+            color: white !important;
+            padding: 24px 32px !important;
+            border-radius: 12px !important;
+            font-size: 18px !important;
+            font-weight: 600 !important;
+            border: none !important;
+            cursor: pointer !important;
+            transition: all 0.2s ease !important;
+            box-shadow: var(--shadow) !important;
+            min-height: 64px !important;
+            min-width: 200px !important;
+        }
+        
+        .btn-primary:hover {
+            background-color: #1d4ed8 !important;
+            box-shadow: var(--shadow-lg) !important;
+            transform: translateY(-1px) !important;
+        }
+        
+        .btn-secondary {
+            background-color: var(--secondary) !important;
+            color: white !important;
+            padding: 16px 24px !important;
+            border-radius: 8px !important;
+            font-size: 16px !important;
+            font-weight: 500 !important;
+            border: none !important;
+            cursor: pointer !important;
+            transition: all 0.2s ease !important;
+            box-shadow: var(--shadow) !important;
+        }
+        
+        .btn-secondary:hover {
+            background-color: #047857 !important;
+            box-shadow: var(--shadow-lg) !important;
+        }
+        
+        .card {
+            background-color: var(--cards) !important;
+            border-radius: 16px !important;
+            padding: 32px !important;
+            box-shadow: var(--shadow) !important;
+            border: 1px solid var(--borders) !important;
+            transition: all 0.2s ease !important;
+        }
+        
+        .card:hover {
+            box-shadow: var(--shadow-lg) !important;
+            transform: translateY(-2px) !important;
+        }
+        
+        .card-compact {
+            background-color: white !important;
+            border-radius: 12px !important;
+            padding: 24px !important;
+            box-shadow: var(--shadow) !important;
+            border: 1px solid var(--borders) !important;
+            transition: all 0.2s ease !important;
+        }
+        
+        .input-field {
+            width: 100% !important;
+            padding: 16px 20px !important;
+            border-radius: 8px !important;
+            border: 2px solid var(--borders) !important;
+            font-size: 18px !important;
+            transition: all 0.2s ease !important;
+            background-color: white !important;
+        }
+        
+        .input-field:focus {
+            outline: none !important;
+            border-color: var(--primary) !important;
+            box-shadow: 0 0 0 3px rgb(37 99 235 / 0.1) !important;
+        }
+        
+        .header {
+            background-color: white !important;
+            border-bottom: 1px solid var(--borders) !important;
+            padding: 24px 0 !important;
+            box-shadow: var(--shadow) !important;
+        }
+        
+        .stats-card {
+            background: linear-gradient(135deg, var(--secondary), #34d399) !important;
+            color: white !important;
+            border-radius: 16px !important;
+            padding: 24px !important;
+            text-align: center !important;
+        }
+        
+        .recent-item {
+            display: flex !important;
+            justify-content: space-between !important;
+            align-items: center !important;
+            padding: 16px 0 !important;
+            border-bottom: 1px solid var(--borders) !important;
+        }
+        
+        .recent-item:last-child {
+            border-bottom: none !important;
+        }
+        
+        .icon-large {
+            width: 48px !important;
+            height: 48px !important;
+            color: white !important;
+        }
+        
+        h1 {
+            font-size: 32px !important;
+            font-weight: 700 !important;
+            color: var(--text) !important;
+            margin-bottom: 32px !important;
+            line-height: 1.2 !important;
+        }
+        
+        h2 {
+            font-size: 24px !important;
+            font-weight: 600 !important;
+            color: var(--text) !important;
+            margin-bottom: 24px !important;
+            line-height: 1.3 !important;
+        }
+        
+        h3 {
+            font-size: 20px !important;
+            font-weight: 500 !important;
+            color: var(--text) !important;
+            margin-bottom: 16px !important;
+        }
+    </style>
+</head>
+<body class="min-h-screen">
+
+    <!-- Header -->
+    <header class="header">
+        <div class="max-w-7xl mx-auto px-8">
+            <div class="flex justify-between items-center">
+                <div class="flex items-center gap-4">
+                    <div class="w-12 h-12 bg-blue-600 rounded-lg flex items-center justify-center">
+                        <i data-lucide="heart-pulse" class="w-6 h-6 text-white"></i>
+                    </div>
+                    <h1 class="!mb-0">🏥 קליניקת צפי</h1>
+                </div>
+                <div class="flex items-center gap-4">
+                    <span class="text-lg">שלום צפי 👋</span>
+                    <button class="btn-secondary">
+                        <i data-lucide="settings" class="w-5 h-5 ml-2"></i>
+                        הגדרות
+                    </button>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <main class="max-w-7xl mx-auto px-8 py-12">
+        
+        <!-- Main Action Buttons -->
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 mb-12">
+            
+            <!-- New Document Button -->
+            <div class="card text-center hover:scale-105 cursor-pointer">
+                <div class="w-24 h-24 bg-blue-600 rounded-full mx-auto mb-6 flex items-center justify-center">
+                    <i data-lucide="file-plus" class="icon-large"></i>
+                </div>
+                <h2 class="!mb-4">📝 מסמך חדש</h2>
+                <p class="text-gray-600 mb-6">יצירת סיכום טיפול חדש למטופל</p>
+                <button class="btn-primary w-full">התחל עכשיו</button>
+            </div>
+
+            <!-- Patients Management -->
+            <div class="card text-center hover:scale-105 cursor-pointer">
+                <div class="w-24 h-24 bg-green-600 rounded-full mx-auto mb-6 flex items-center justify-center">
+                    <i data-lucide="users" class="icon-large"></i>
+                </div>
+                <h2 class="!mb-4">👥 ניהול מטופלים</h2>
+                <p class="text-gray-600 mb-6">צפייה ועריכת פרטי מטופלים</p>
+                <button class="btn-primary w-full">כניסה למטופלים</button>
+            </div>
+
+            <!-- Templates Management -->
+            <div class="card text-center hover:scale-105 cursor-pointer">
+                <div class="w-24 h-24 bg-purple-600 rounded-full mx-auto mb-6 flex items-center justify-center">
+                    <i data-lucide="layout-template" class="icon-large"></i>
+                </div>
+                <h2 class="!mb-4">📋 ניהול טמפלייטים</h2>
+                <p class="text-gray-600 mb-6">יצירת ועריכת תבניות מסמכים</p>
+                <button class="btn-primary w-full">ניהול תבניות</button>
+            </div>
+        </div>
+
+        <!-- Statistics and Recent Documents Row -->
+        <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
+            
+            <!-- Statistics Card -->
+            <div class="stats-card">
+                <h3 class="!mb-6 !text-white">📊 סטטיסטיקות מהירות</h3>
+                <div class="space-y-4">
+                    <div class="flex justify-between items-center">
+                        <span>מטופלים פעילים:</span>
+                        <span class="text-2xl font-bold">25</span>
+                    </div>
+                    <div class="flex justify-between items-center">
+                        <span>מסמכים השבוע:</span>
+                        <span class="text-2xl font-bold">8</span>
+                    </div>
+                    <div class="flex justify-between items-center">
+                        <span>טמפלייטים:</span>
+                        <span class="text-2xl font-bold">4</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Recent Documents -->
+            <div class="lg:col-span-2 card-compact">
+                <h3>📋 מסמכים אחרונים</h3>
+                <div class="space-y-2">
+                    <div class="recent-item">
+                        <div>
+                            <div class="font-semibold">דוח טיפול - רחל כהן</div>
+                            <div class="text-gray-600 text-sm">15/08/2025 • 14:30</div>
+                        </div>
+                        <button class="btn-secondary">פתח</button>
+                    </div>
+                    <div class="recent-item">
+                        <div>
+                            <div class="font-semibold">סיכום התקדמות - יוסי לוי</div>
+                            <div class="text-gray-600 text-sm">14/08/2025 • 16:45</div>
+                        </div>
+                        <button class="btn-secondary">פתח</button>
+                    </div>
+                    <div class="recent-item">
+                        <div>
+                            <div class="font-semibold">הערכה ראשונית - מירי דוד</div>
+                            <div class="text-gray-600 text-sm">13/08/2025 • 10:15</div>
+                        </div>
+                        <button class="btn-secondary">פתח</button>
+                    </div>
+                </div>
+                <button class="btn-secondary w-full mt-6">
+                    <i data-lucide="eye" class="w-4 h-4 ml-2"></i>
+                    צפה בכל המסמכים
+                </button>
+            </div>
+        </div>
+
+        <!-- Quick Actions -->
+        <div class="mt-12 p-8 bg-blue-50 rounded-2xl border border-blue-200">
+            <h3 class="!text-blue-800">🚀 פעולות מהירות</h3>
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+                <button class="bg-white border border-blue-200 rounded-lg p-4 text-blue-700 hover:bg-blue-100 transition-colors">
+                    <i data-lucide="search" class="w-5 h-5 mb-2"></i>
+                    <div>חיפוש מטופל</div>
+                </button>
+                <button class="bg-white border border-blue-200 rounded-lg p-4 text-blue-700 hover:bg-blue-100 transition-colors">
+                    <i data-lucide="download" class="w-5 h-5 mb-2"></i>
+                    <div>גיבוי נתונים</div>
+                </button>
+                <button class="bg-white border border-blue-200 rounded-lg p-4 text-blue-700 hover:bg-blue-100 transition-colors">
+                    <i data-lucide="help-circle" class="w-5 h-5 mb-2"></i>
+                    <div>עזרה ותמיכה</div>
+                </button>
+            </div>
+        </div>
+
+    </main>
+
+    <script>
+        // Initialize Lucide icons
+        lucide.createIcons();
+        
+        // Add subtle animations
+        document.addEventListener('DOMContentLoaded', function() {
+            const cards = document.querySelectorAll('.card');
+            cards.forEach((card, index) => {
+                card.style.opacity = '0';
+                card.style.transform = 'translateY(20px)';
+                setTimeout(() => {
+                    card.style.transition = 'all 0.5s ease';
+                    card.style.opacity = '1';
+                    card.style.transform = 'translateY(0)';
+                }, index * 100);
+            });
+        });
+
+        // Button click effects
+        document.querySelectorAll('button').forEach(button => {
+            button.addEventListener('click', function(e) {
+                // Create ripple effect
+                const ripple = document.createElement('span');
+                const rect = this.getBoundingClientRect();
+                const size = Math.max(rect.width, rect.height);
+                const x = e.clientX - rect.left - size / 2;
+                const y = e.clientY - rect.top - size / 2;
+                
+                ripple.style.cssText = `
+                    position: absolute;
+                    width: ${size}px;
+                    height: ${size}px;
+                    left: ${x}px;
+                    top: ${y}px;
+                    background: rgba(255, 255, 255, 0.5);
+                    border-radius: 50%;
+                    transform: scale(0);
+                    animation: ripple 0.6s linear;
+                    pointer-events: none;
+                `;
+                
+                this.style.position = 'relative';
+                this.style.overflow = 'hidden';
+                this.appendChild(ripple);
+                
+                setTimeout(() => ripple.remove(), 600);
+            });
+        });
+
+        // Add ripple animation
+        const style = document.createElement('style');
+        style.textContent = `
+            @keyframes ripple {
+                to {
+                    transform: scale(4);
+                    opacity: 0;
+                }
+            }
+        `;
+        document.head.appendChild(style);
+    </script>
+
+</body>
+</html>

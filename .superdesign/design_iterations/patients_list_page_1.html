@@ -1,0 +1,527 @@
+<!DOCTYPE html>
+<html lang="he" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ניהול מטופלים - קליניקת צפי</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Heebo:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <script src="https://unpkg.com/lucide@latest/dist/umd/lucide.min.js"></script>
+    
+    <style>
+        :root {
+            --primary: #2563EB;
+            --secondary: #10B981;
+            --success: #059669;
+            --warning: #F59E0B;
+            --error: #DC2626;
+            --background: #FFFFFF;
+            --cards: #F9FAFB;
+            --text: #111827;
+            --borders: #E5E7EB;
+            --shadow: 0 1px 3px 0 rgb(0 0 0 / 0.1), 0 1px 2px -1px rgb(0 0 0 / 0.1);
+            --shadow-lg: 0 10px 15px -3px rgb(0 0 0 / 0.1), 0 4px 6px -4px rgb(0 0 0 / 0.1);
+        }
+        
+        * {
+            font-family: 'Heebo', sans-serif !important;
+        }
+        
+        body {
+            background-color: var(--background) !important;
+            color: var(--text) !important;
+            font-size: 18px !important;
+            line-height: 1.6 !important;
+        }
+        
+        .btn-primary {
+            background-color: var(--primary) !important;
+            color: white !important;
+            padding: 16px 24px !important;
+            border-radius: 8px !important;
+            font-size: 16px !important;
+            font-weight: 600 !important;
+            border: none !important;
+            cursor: pointer !important;
+            transition: all 0.2s ease !important;
+            box-shadow: var(--shadow) !important;
+        }
+        
+        .btn-primary:hover {
+            background-color: #1d4ed8 !important;
+            box-shadow: var(--shadow-lg) !important;
+            transform: translateY(-1px) !important;
+        }
+        
+        .btn-secondary {
+            background-color: var(--secondary) !important;
+            color: white !important;
+            padding: 12px 20px !important;
+            border-radius: 6px !important;
+            font-size: 14px !important;
+            font-weight: 500 !important;
+            border: none !important;
+            cursor: pointer !important;
+            transition: all 0.2s ease !important;
+            box-shadow: var(--shadow) !important;
+        }
+        
+        .btn-secondary:hover {
+            background-color: #047857 !important;
+            box-shadow: var(--shadow-lg) !important;
+        }
+        
+        .btn-outline {
+            background-color: white !important;
+            color: var(--primary) !important;
+            padding: 12px 20px !important;
+            border: 2px solid var(--primary) !important;
+            border-radius: 6px !important;
+            font-size: 14px !important;
+            font-weight: 500 !important;
+            cursor: pointer !important;
+            transition: all 0.2s ease !important;
+        }
+        
+        .btn-outline:hover {
+            background-color: var(--primary) !important;
+            color: white !important;
+        }
+        
+        .card {
+            background-color: white !important;
+            border-radius: 12px !important;
+            padding: 24px !important;
+            box-shadow: var(--shadow) !important;
+            border: 1px solid var(--borders) !important;
+            transition: all 0.2s ease !important;
+        }
+        
+        .card:hover {
+            box-shadow: var(--shadow-lg) !important;
+            transform: translateY(-2px) !important;
+        }
+        
+        .patient-card {
+            background-color: white !important;
+            border-radius: 12px !important;
+            padding: 24px !important;
+            box-shadow: var(--shadow) !important;
+            border: 1px solid var(--borders) !important;
+            transition: all 0.2s ease !important;
+            display: flex !important;
+            justify-content: space-between !important;
+            align-items: center !important;
+            margin-bottom: 16px !important;
+        }
+        
+        .patient-card:hover {
+            box-shadow: var(--shadow-lg) !important;
+            transform: translateY(-1px) !important;
+            border-color: var(--primary) !important;
+        }
+        
+        .search-input {
+            width: 100% !important;
+            padding: 16px 20px 16px 50px !important;
+            border-radius: 12px !important;
+            border: 2px solid var(--borders) !important;
+            font-size: 18px !important;
+            transition: all 0.2s ease !important;
+            background-color: white !important;
+        }
+        
+        .search-input:focus {
+            outline: none !important;
+            border-color: var(--primary) !important;
+            box-shadow: 0 0 0 3px rgb(37 99 235 / 0.1) !important;
+        }
+        
+        .search-wrapper {
+            position: relative !important;
+        }
+        
+        .search-icon {
+            position: absolute !important;
+            right: 16px !important;
+            top: 50% !important;
+            transform: translateY(-50%) !important;
+            color: #6B7280 !important;
+        }
+        
+        .header {
+            background-color: white !important;
+            border-bottom: 1px solid var(--borders) !important;
+            padding: 24px 0 !important;
+            box-shadow: var(--shadow) !important;
+        }
+        
+        .badge {
+            background-color: var(--secondary) !important;
+            color: white !important;
+            padding: 4px 12px !important;
+            border-radius: 20px !important;
+            font-size: 12px !important;
+            font-weight: 500 !important;
+        }
+        
+        .badge-warning {
+            background-color: var(--warning) !important;
+        }
+        
+        .patient-info h3 {
+            font-size: 20px !important;
+            font-weight: 600 !important;
+            color: var(--text) !important;
+            margin-bottom: 8px !important;
+        }
+        
+        .patient-info p {
+            font-size: 14px !important;
+            color: #6B7280 !important;
+            margin-bottom: 4px !important;
+        }
+        
+        .patient-stats {
+            text-align: center !important;
+            margin-left: 24px !important;
+        }
+        
+        .stat-number {
+            font-size: 24px !important;
+            font-weight: 700 !important;
+            color: var(--primary) !important;
+        }
+        
+        .stat-label {
+            font-size: 12px !important;
+            color: #6B7280 !important;
+        }
+    </style>
+</head>
+<body class="min-h-screen bg-gray-50">
+
+    <!-- Header -->
+    <header class="header">
+        <div class="max-w-7xl mx-auto px-8">
+            <div class="flex justify-between items-center">
+                <div class="flex items-center gap-6">
+                    <button class="btn-outline flex items-center gap-2">
+                        <i data-lucide="arrow-right" class="w-4 h-4"></i>
+                        חזרה לדף הבית
+                    </button>
+                    <h1 class="text-2xl font-bold !mb-0">👥 ניהול מטופלים</h1>
+                </div>
+                <div class="flex items-center gap-4">
+                    <div class="text-sm text-gray-600">סה"כ 25 מטופלים פעילים</div>
+                    <button class="btn-primary flex items-center gap-2">
+                        <i data-lucide="user-plus" class="w-4 h-4"></i>
+                        מטופל חדש
+                    </button>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <main class="max-w-7xl mx-auto px-8 py-8">
+        
+        <!-- Search and Filters -->
+        <div class="card mb-8">
+            <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
+                <!-- Search -->
+                <div class="lg:col-span-2">
+                    <label class="block text-sm font-medium mb-2">חיפוש מטופל</label>
+                    <div class="search-wrapper">
+                        <input 
+                            type="text" 
+                            class="search-input" 
+                            placeholder="הקלד שם מטופל או מספר ת.ז..."
+                        >
+                        <i data-lucide="search" class="w-5 h-5 search-icon"></i>
+                    </div>
+                </div>
+                
+                <!-- Filter -->
+                <div>
+                    <label class="block text-sm font-medium mb-2">סינון</label>
+                    <select class="w-full p-4 border-2 border-gray-200 rounded-lg text-lg focus:border-blue-600 focus:outline-none">
+                        <option>כל המטופלים</option>
+                        <option>טיפול השבוע</option>
+                        <option>טיפול בחודש</option>
+                        <option>מטופלים חדשים</option>
+                    </select>
+                </div>
+            </div>
+        </div>
+
+        <!-- Quick Stats -->
+        <div class="grid grid-cols-1 md:grid-cols-4 gap-6 mb-8">
+            <div class="bg-blue-50 border border-blue-200 rounded-lg p-6 text-center">
+                <div class="text-2xl font-bold text-blue-600">25</div>
+                <div class="text-sm text-blue-600">סה"כ מטופלים</div>
+            </div>
+            <div class="bg-green-50 border border-green-200 rounded-lg p-6 text-center">
+                <div class="text-2xl font-bold text-green-600">8</div>
+                <div class="text-sm text-green-600">טיפולים השבוע</div>
+            </div>
+            <div class="bg-yellow-50 border border-yellow-200 rounded-lg p-6 text-center">
+                <div class="text-2xl font-bold text-yellow-600">3</div>
+                <div class="text-sm text-yellow-600">מטופלים חדשים</div>
+            </div>
+            <div class="bg-purple-50 border border-purple-200 rounded-lg p-6 text-center">
+                <div class="text-2xl font-bold text-purple-600">47</div>
+                <div class="text-sm text-purple-600">מסמכים החודש</div>
+            </div>
+        </div>
+
+        <!-- Patients List -->
+        <div class="space-y-4">
+            
+            <!-- Patient 1 -->
+            <div class="patient-card">
+                <div class="flex items-center gap-4">
+                    <div class="w-16 h-16 bg-blue-100 rounded-full flex items-center justify-center">
+                        <i data-lucide="user" class="w-8 h-8 text-blue-600"></i>
+                    </div>
+                    <div class="patient-info">
+                        <h3>רחל כהן</h3>
+                        <p>📞 054-1234567 • 📧 rachel@email.com</p>
+                        <p>ת.ז. 123456789 • גיל 45</p>
+                        <div class="flex gap-2 mt-2">
+                            <span class="badge">טיפול השבוע</span>
+                            <span class="badge badge-warning">3 מסמכים</span>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="flex items-center gap-6">
+                    <div class="patient-stats">
+                        <div class="stat-number">15/08</div>
+                        <div class="stat-label">טיפול אחרון</div>
+                    </div>
+                    <div class="patient-stats">
+                        <div class="stat-number">8</div>
+                        <div class="stat-label">סה"כ טיפולים</div>
+                    </div>
+                    <div class="flex gap-2">
+                        <button class="btn-outline">צפייה</button>
+                        <button class="btn-secondary">מסמך חדש</button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Patient 2 -->
+            <div class="patient-card">
+                <div class="flex items-center gap-4">
+                    <div class="w-16 h-16 bg-green-100 rounded-full flex items-center justify-center">
+                        <i data-lucide="user" class="w-8 h-8 text-green-600"></i>
+                    </div>
+                    <div class="patient-info">
+                        <h3>יוסי לוי</h3>
+                        <p>📞 052-9876543 • 📧 yossi@email.com</p>
+                        <p>ת.ז. 987654321 • גיל 38</p>
+                        <div class="flex gap-2 mt-2">
+                            <span class="badge">5 מסמכים</span>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="flex items-center gap-6">
+                    <div class="patient-stats">
+                        <div class="stat-number">10/08</div>
+                        <div class="stat-label">טיפול אחרון</div>
+                    </div>
+                    <div class="patient-stats">
+                        <div class="stat-number">12</div>
+                        <div class="stat-label">סה"כ טיפולים</div>
+                    </div>
+                    <div class="flex gap-2">
+                        <button class="btn-outline">צפייה</button>
+                        <button class="btn-secondary">מסמך חדש</button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Patient 3 -->
+            <div class="patient-card">
+                <div class="flex items-center gap-4">
+                    <div class="w-16 h-16 bg-purple-100 rounded-full flex items-center justify-center">
+                        <i data-lucide="user" class="w-8 h-8 text-purple-600"></i>
+                    </div>
+                    <div class="patient-info">
+                        <h3>מירי דוד</h3>
+                        <p>📞 050-5556677 • 📧 miri@email.com</p>
+                        <p>ת.ז. 555666777 • גיל 52</p>
+                        <div class="flex gap-2 mt-2">
+                            <span class="badge badge-warning">מטופל חדש</span>
+                            <span class="badge">1 מסמך</span>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="flex items-center gap-6">
+                    <div class="patient-stats">
+                        <div class="stat-number">05/08</div>
+                        <div class="stat-label">טיפול אחרון</div>
+                    </div>
+                    <div class="patient-stats">
+                        <div class="stat-number">2</div>
+                        <div class="stat-label">סה"כ טיפולים</div>
+                    </div>
+                    <div class="flex gap-2">
+                        <button class="btn-outline">צפייה</button>
+                        <button class="btn-secondary">מסמך חדש</button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Patient 4 -->
+            <div class="patient-card">
+                <div class="flex items-center gap-4">
+                    <div class="w-16 h-16 bg-orange-100 rounded-full flex items-center justify-center">
+                        <i data-lucide="user" class="w-8 h-8 text-orange-600"></i>
+                    </div>
+                    <div class="patient-info">
+                        <h3>דני שלום</h3>
+                        <p>📞 053-1122334 • 📧 danny@email.com</p>
+                        <p>ת.ז. 111222333 • גיל 29</p>
+                        <div class="flex gap-2 mt-2">
+                            <span class="badge">4 מסמכים</span>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="flex items-center gap-6">
+                    <div class="patient-stats">
+                        <div class="stat-number">02/08</div>
+                        <div class="stat-label">טיפול אחרון</div>
+                    </div>
+                    <div class="patient-stats">
+                        <div class="stat-number">6</div>
+                        <div class="stat-label">סה"כ טיפולים</div>
+                    </div>
+                    <div class="flex gap-2">
+                        <button class="btn-outline">צפייה</button>
+                        <button class="btn-secondary">מסמך חדש</button>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+
+        <!-- Pagination -->
+        <div class="flex justify-center mt-8">
+            <div class="flex gap-2">
+                <button class="px-4 py-2 border border-gray-300 rounded-lg hover:bg-gray-50">קודם</button>
+                <button class="px-4 py-2 bg-blue-600 text-white rounded-lg">1</button>
+                <button class="px-4 py-2 border border-gray-300 rounded-lg hover:bg-gray-50">2</button>
+                <button class="px-4 py-2 border border-gray-300 rounded-lg hover:bg-gray-50">3</button>
+                <button class="px-4 py-2 border border-gray-300 rounded-lg hover:bg-gray-50">הבא</button>
+            </div>
+        </div>
+
+        <!-- Quick Actions -->
+        <div class="mt-12 p-8 bg-blue-50 rounded-2xl border border-blue-200">
+            <h3 class="text-xl font-semibold text-blue-800 mb-6">🚀 פעולות מהירות</h3>
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+                <button class="bg-white border border-blue-200 rounded-lg p-4 text-blue-700 hover:bg-blue-100 transition-colors flex items-center gap-3">
+                    <i data-lucide="user-plus" class="w-5 h-5"></i>
+                    <div>הוספת מטופל חדש</div>
+                </button>
+                <button class="bg-white border border-blue-200 rounded-lg p-4 text-blue-700 hover:bg-blue-100 transition-colors flex items-center gap-3">
+                    <i data-lucide="download" class="w-5 h-5"></i>
+                    <div>ייצוא רשימת מטופלים</div>
+                </button>
+                <button class="bg-white border border-blue-200 rounded-lg p-4 text-blue-700 hover:bg-blue-100 transition-colors flex items-center gap-3">
+                    <i data-lucide="calendar" class="w-5 h-5"></i>
+                    <div>תזמון טיפולים</div>
+                </button>
+            </div>
+        </div>
+
+    </main>
+
+    <script>
+        // Initialize Lucide icons
+        lucide.createIcons();
+        
+        // Add search functionality
+        const searchInput = document.querySelector('.search-input');
+        const patientCards = document.querySelectorAll('.patient-card');
+        
+        searchInput.addEventListener('input', function(e) {
+            const searchTerm = e.target.value.toLowerCase();
+            
+            patientCards.forEach(card => {
+                const patientName = card.querySelector('h3').textContent.toLowerCase();
+                const patientId = card.querySelector('.patient-info p').textContent.toLowerCase();
+                
+                if (patientName.includes(searchTerm) || patientId.includes(searchTerm)) {
+                    card.style.display = 'flex';
+                } else {
+                    card.style.display = 'none';
+                }
+            });
+        });
+
+        // Add loading animation for cards
+        document.addEventListener('DOMContentLoaded', function() {
+            const cards = document.querySelectorAll('.patient-card');
+            cards.forEach((card, index) => {
+                card.style.opacity = '0';
+                card.style.transform = 'translateY(20px)';
+                setTimeout(() => {
+                    card.style.transition = 'all 0.5s ease';
+                    card.style.opacity = '1';
+                    card.style.transform = 'translateY(0)';
+                }, index * 100);
+            });
+        });
+
+        // Button click effects
+        document.querySelectorAll('button').forEach(button => {
+            button.addEventListener('click', function(e) {
+                // Create ripple effect
+                const ripple = document.createElement('span');
+                const rect = this.getBoundingClientRect();
+                const size = Math.max(rect.width, rect.height);
+                const x = e.clientX - rect.left - size / 2;
+                const y = e.clientY - rect.top - size / 2;
+                
+                ripple.style.cssText = `
+                    position: absolute;
+                    width: ${size}px;
+                    height: ${size}px;
+                    left: ${x}px;
+                    top: ${y}px;
+                    background: rgba(255, 255, 255, 0.5);
+                    border-radius: 50%;
+                    transform: scale(0);
+                    animation: ripple 0.6s linear;
+                    pointer-events: none;
+                `;
+                
+                this.style.position = 'relative';
+                this.style.overflow = 'hidden';
+                this.appendChild(ripple);
+                
+                setTimeout(() => ripple.remove(), 600);
+            });
+        });
+
+        // Add ripple animation
+        const style = document.createElement('style');
+        style.textContent = `
+            @keyframes ripple {
+                to {
+                    transform: scale(4);
+                    opacity: 0;
+                }
+            }
+        `;
+        document.head.appendChild(style);
+    </script>
+
+</body>
+</html>
