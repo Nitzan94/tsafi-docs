@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Download, FileText, User, Calendar, MapPin, Phone, Eye, EyeOff } from 'lucide-react';
+import { FileText, User, Calendar, MapPin, Phone, Eye, EyeOff } from 'lucide-react';
 import type { Patient } from '@/types';
 import type { Document, Template, TemplateField } from '@/types/template';
 import { formatHebrewDate } from '@/utils/hebrew';
@@ -8,7 +8,6 @@ interface DocumentPreviewProps {
   document: Document;
   template: Template;
   patient: Patient;
-  onExport?: (format: 'pdf' | 'docx') => void;
   onUpdateDocument?: (updates: Partial<Document>) => void;
 }
 
@@ -16,7 +15,6 @@ export const DocumentPreview: React.FC<DocumentPreviewProps> = ({
   document,
   template,
   patient,
-  onExport,
   onUpdateDocument
 }) => {
   const [showPatientDetails, setShowPatientDetails] = useState(

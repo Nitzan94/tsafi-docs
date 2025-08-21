@@ -1,12 +1,16 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import { 
   Home, 
   Users, 
   FileText, 
-  Layout as LayoutIcon
+  Layout as LayoutIcon,
+  StickyNote,
+  Trash2,
+  Plus
 } from 'lucide-react';
 import { cn } from '@/utils/cn';
+import { useQuickNotesStore } from '@/store/useQuickNotesStore';
 
 interface NavItem {
   href: string;
@@ -39,15 +43,34 @@ const navigationItems: NavItem[] = [
 
 export const Navigation: React.FC = () => {
   const location = useLocation();
+  
+  // מצב עבור הערות מהירות
+  const { addNote, deleteNote, getAllNotes, error } = useQuickNotesStore();
+  const [newNoteContent, setNewNoteContent] = useState('');
+  
+  // פונקציה להוספת הערה
+  const handleAddNote = () => {
+    if (newNoteContent.trim()) {
+      addNote(newNoteContent);
+      setNewNoteContent('');
+    }
+  };
+  
+  // פונקציה לטיפול ב-Enter
+  const handleKeyPress = (e: React.KeyboardEvent) => {
+    if (e.key === 'Enter') {
+      handleAddNote();
+    }
+  };
 
   return (
     <nav className={cn(
       "fixed right-0 top-[7.5rem] h-[calc(100vh-7.5rem)]",
-      "w-64 bg-white border-l border-gray-200",
+      "w-72 bg-white border-l border-gray-200",
       "shadow-sm z-40",
       "overflow-y-auto"
     )}>
-      <div className="p-6">
+      <div className="px-8 py-6">
         <h2 className="text-sm font-semibold text-gray-800 mb-4 flex items-center gap-2">
           <div className="w-2 h-2 bg-blue-500 rounded-full"></div>
           תפריט ניווט
@@ -91,30 +114,75 @@ export const Navigation: React.FC = () => {
         </ul>
       </div>
 
-      {/* Medical Quick Stats */}
-      <div className="mt-6 p-6 border-t border-gray-100 bg-gray-50">
+      {/* Quick Notes */}
+      <div className="mt-6 px-8 py-6 border-t border-gray-100 bg-gray-50">
         <h3 className="text-sm font-semibold text-gray-800 mb-4 flex items-center gap-2">
           <div className="w-2 h-2 bg-green-500 rounded-full"></div>
-          נתונים מהירים
+          <StickyNote className="h-4 w-4" />
+          הערות מהירות
         </h3>
-        <div className="space-y-3">
-          <div className="flex justify-between items-center p-3 bg-white rounded-lg">
-            <span className="text-sm text-gray-600">מטופלים פעילים</span>
-            <span className="font-bold text-blue-600">0</span>
+        
+        {/* שדה הוספת הערה */}
+        <div className="mb-4">
+          <div className="flex gap-2">
+            <input
+              type="text"
+              value={newNoteContent}
+              onChange={(e) => setNewNoteContent(e.target.value)}
+              onKeyPress={handleKeyPress}
+              placeholder="הקלידי הערה מהירה..."
+              className="flex-1 px-3 py-2 text-sm border border-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+            />
+            <button
+              onClick={handleAddNote}
+              disabled={!newNoteContent.trim()}
+              className="px-3 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
+            >
+              <Plus className="h-4 w-4" />
+            </button>
           </div>
-          <div className="flex justify-between items-center p-3 bg-white rounded-lg">
-            <span className="text-sm text-gray-600">מסמכים השבוע</span>
-            <span className="font-bold text-green-600">0</span>
-          </div>
-          <div className="flex justify-between items-center p-3 bg-white rounded-lg">
-            <span className="text-sm text-gray-600">תבניות פעילות</span>
-            <span className="font-bold text-purple-600">0</span>
-          </div>
+          {error && (
+            <p className="text-xs text-red-600 mt-1">{error}</p>
+          )}
+        </div>
+        
+        {/* רשימת הערות */}
+        <div className="space-y-2 max-h-48 overflow-y-auto">
+          {getAllNotes().length === 0 ? (
+            <div className="text-center py-4 text-gray-500">
+              <StickyNote className="h-8 w-8 mx-auto mb-2 text-gray-300" />
+              <p className="text-xs">אין הערות עדיין</p>
+            </div>
+          ) : (
+            getAllNotes().map((note) => (
+              <div key={note.id} className="flex items-start gap-2 p-3 bg-white rounded-lg group">
+                <div className="flex-1 min-w-0">
+                  <p className="text-sm text-gray-800 leading-relaxed break-words">
+                    {note.content}
+                  </p>
+                  <p className="text-xs text-gray-400 mt-1">
+                    {new Date(note.createdAt).toLocaleDateString('he-IL', {
+                      month: 'short',
+                      day: 'numeric',
+                      hour: '2-digit',
+                      minute: '2-digit'
+                    })}
+                  </p>
+                </div>
+                <button
+                  onClick={() => deleteNote(note.id)}
+                  className="opacity-0 group-hover:opacity-100 transition-opacity p-1 text-gray-400 hover:text-red-600 hover:bg-red-50 rounded"
+                >
+                  <Trash2 className="h-3 w-3" />
+                </button>
+              </div>
+            ))
+          )}
         </div>
       </div>
 
       {/* Medical Footer */}
-      <div className="mt-6 p-6 border-t border-gray-100">
+      <div className="mt-6 px-8 py-6 border-t border-gray-100">
         <div className="text-center">
           <div className="w-12 h-12 bg-blue-100 rounded-full flex items-center justify-center mx-auto mb-2">
             <span className="text-blue-600 font-bold text-lg">צ</span>

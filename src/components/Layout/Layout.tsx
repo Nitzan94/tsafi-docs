@@ -16,9 +16,9 @@ export const Layout: React.FC<LayoutProps> = ({ children }) => {
         <main className={cn(
           "flex-1 p-8",
           "transition-all duration-200",
-          "lg:mr-64" // Account for sidebar width
+          "lg:mr-72" // Account for sidebar width
         )}>
-          <div className="max-w-7xl mx-auto">
+          <div className="max-w-6xl mx-auto">
             {children}
           </div>
         </main>

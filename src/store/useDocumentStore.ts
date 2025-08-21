@@ -70,14 +70,15 @@ export const useDocumentStore = create<DocumentState & DocumentActions>()(
             isLoading: false,
           }));
           
-          return newDocument.id;
-          
           console.log('מסמך חדש נוצר:', newDocument.name);
+          
+          return newDocument.id;
         } catch (error) {
           set({ 
             error: 'שגיאה ביצירת המסמך. אנא נסי שוב.',
             isLoading: false 
           });
+          throw error;
         }
       },
 
@@ -114,6 +115,7 @@ export const useDocumentStore = create<DocumentState & DocumentActions>()(
             error: 'שגיאה בעדכון המסמך. אנא נסי שוב.',
             isLoading: false 
           });
+          throw error;
         }
       },
 
@@ -139,6 +141,7 @@ export const useDocumentStore = create<DocumentState & DocumentActions>()(
             error: 'שגיאה במחיקת המסמך. אנא נסי שוב.',
             isLoading: false 
           });
+          throw error;
         }
       },
 
@@ -165,6 +168,7 @@ export const useDocumentStore = create<DocumentState & DocumentActions>()(
           await get().addDocument(documentData);
         } catch (error) {
           set({ error: 'שגיאה בשכפול המסמך. אנא נסי שוב.' });
+          throw error;
         }
       },
 

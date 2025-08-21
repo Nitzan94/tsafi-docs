@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { X, Download, Edit3, Printer } from 'lucide-react';
 import { DocumentPreview } from './DocumentPreview';
 import { WordDocumentExporter } from '@/utils/documentExportSimple';
@@ -133,7 +133,6 @@ export const DocumentPreviewModal: React.FC<DocumentPreviewModalProps> = ({
               document={document}
               template={template}
               patient={patient}
-              onExport={onExport}
               onUpdateDocument={onUpdateDocument}
             />
           </div>
