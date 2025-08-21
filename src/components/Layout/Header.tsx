@@ -12,7 +12,7 @@ export const Header: React.FC = () => {
       "sticky top-0 z-50",
       "shadow-sm"
     )}>
-      <div className="flex items-center justify-between h-20 px-4 md:px-8">
+      <div className="flex items-center justify-between min-h-20 py-4 px-4 md:px-8">
         {/* Mobile Menu + Logo - Left Side */}
         <div className="flex items-center gap-3">
           {/* Hamburger Menu - Mobile Only */}
@@ -42,12 +42,12 @@ export const Header: React.FC = () => {
         </div>
 
         {/* Center - Clinic Title with Link */}
-        <div className="flex items-center">
+        <div className="flex items-center flex-1 justify-center px-2">
           <a href="/" className="flex flex-col items-center text-center group">
-            <div className="text-2xl font-bold text-blue-700 group-hover:text-blue-800 transition-colors">
+            <div className="text-lg sm:text-xl lg:text-2xl font-bold text-blue-700 group-hover:text-blue-800 transition-colors">
               קליניקת צפי
             </div>
-            <div className="text-sm text-gray-500 font-medium">
+            <div className="text-xs sm:text-sm text-gray-500 font-medium hidden sm:block">
               מערכת ניהול מסמכים מקצועית
             </div>
           </a>
@@ -72,8 +72,8 @@ export const Header: React.FC = () => {
           </button>
           
           {/* User Profile - Medical Professional */}
-          <div className="flex items-center gap-3 bg-blue-50 rounded-xl px-4 py-2">
-            <div className="text-right hidden sm:block">
+          <div className="flex items-center gap-2 lg:gap-3 bg-blue-50 rounded-xl px-2 lg:px-4 py-2">
+            <div className="text-right hidden md:block">
               <div className="text-sm font-semibold text-gray-800">
                 צפי בר-נס
               </div>
@@ -82,7 +82,7 @@ export const Header: React.FC = () => {
               </div>
             </div>
             <div className="p-2 bg-blue-100 rounded-lg">
-              <User className="h-5 w-5 text-blue-600" />
+              <User className="h-4 w-4 lg:h-5 lg:w-5 text-blue-600" />
             </div>
           </div>
         </div>
