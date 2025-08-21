@@ -1,4 +1,5 @@
 import React, { useState, useMemo, useEffect } from 'react';
+import { useNavigate, Link } from 'react-router-dom';
 import { 
   Plus, 
   FileText, 
@@ -18,6 +19,8 @@ import type { Document, DocumentStatus } from '@/types/template';
 import { DOCUMENT_STATUS_LABELS, TEMPLATE_CATEGORIES } from '@/types/template';
 
 export const DocumentsPage: React.FC = () => {
+  const navigate = useNavigate();
+  
   const {
     documents,
     searchTerm,
@@ -54,12 +57,12 @@ export const DocumentsPage: React.FC = () => {
   };
 
   const handleDocumentCreated = (documentId: string) => {
-    // Navigate directly to the editor with the new document ID
-    window.location.href = `/documents/edit/${documentId}`;
+    // Navigate directly to the editor with the new document ID using React Router
+    navigate(`/documents/edit/${documentId}`);
   };
 
   const handleEditDocument = (document: Document) => {
-    window.location.href = `/documents/edit/${document.id}`;
+    navigate(`/documents/edit/${document.id}`);
   };
 
   const handleDeleteDocument = async (document: Document) => {
@@ -352,13 +355,13 @@ export const DocumentsPage: React.FC = () => {
                   <Plus className="h-5 w-5" />
                   צרי מסמך ראשון
                 </button>
-                <button
-                  onClick={() => window.location.href = '/templates'}
+                <Link
+                  to="/templates"
                   className="btn btn-ghost flex items-center gap-2"
                 >
                   <FileText className="h-5 w-5" />
                   צפי בתבניות
-                </button>
+                </Link>
               </div>
             )}
           </div>

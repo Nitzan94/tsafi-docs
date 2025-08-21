@@ -36,3 +36,4 @@ coverage
 # Build files
 /build
 /public/build
+.vercel

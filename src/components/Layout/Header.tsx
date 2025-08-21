@@ -1,17 +1,41 @@
 import React from 'react';
-import { User, Settings, Activity } from 'lucide-react';
+import { User, Settings, Activity, Menu, X } from 'lucide-react';
 import { cn } from '@/utils/cn';
+import { useMobileNavigation } from '@/contexts/MobileNavigationContext';
 
 export const Header: React.FC = () => {
+  const { isSidebarOpen, toggleSidebar, isMobile } = useMobileNavigation();
+  
   return (
     <header className={cn(
       "bg-white border-b border-gray-200",
       "sticky top-0 z-50",
       "shadow-sm"
     )}>
-      <div className="flex items-center justify-between h-20 px-8">
-        {/* Logo - Left Side */}
-        <div className="flex items-center gap-4">
+      <div className="flex items-center justify-between h-20 px-4 md:px-8">
+        {/* Mobile Menu + Logo - Left Side */}
+        <div className="flex items-center gap-3">
+          {/* Hamburger Menu - Mobile Only */}
+          {isMobile && (
+            <button
+              onClick={toggleSidebar}
+              className={cn(
+                "p-2 rounded-xl transition-all duration-200",
+                "hover:bg-gray-100 active:bg-gray-200",
+                isSidebarOpen 
+                  ? "bg-blue-100 text-blue-600" 
+                  : "text-gray-600 hover:text-gray-800"
+              )}
+              aria-label={isSidebarOpen ? "סגור תפריט" : "פתח תפריט"}
+            >
+              {isSidebarOpen ? (
+                <X className="h-6 w-6" />
+              ) : (
+                <Menu className="h-6 w-6" />
+              )}
+            </button>
+          )}
+          
           <div className="p-3 bg-blue-100 rounded-xl">
             <Activity className="h-8 w-8 text-blue-600" />
           </div>

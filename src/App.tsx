@@ -2,6 +2,7 @@ import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import { RTLProvider } from '@/components/Layout/RTLProvider';
 import { Layout } from '@/components/Layout/Layout';
 import { ErrorBoundary } from '@/components/ErrorBoundary';
+import { MobileNavigationProvider } from '@/contexts/MobileNavigationContext';
 import { HomePage } from '@/pages/HomePage';
 import { PatientsPage } from '@/pages/PatientsPage';
 import { TemplatesPage } from '@/pages/TemplatesPage';
@@ -13,8 +14,9 @@ function App() {
   return (
     <ErrorBoundary>
       <RTLProvider direction="rtl">
-        <Router>
-          <Layout>
+        <MobileNavigationProvider>
+          <Router>
+            <Layout>
             <ErrorBoundary>
               <Routes>
                 <Route path="/" element={<HomePage />} />
@@ -25,8 +27,9 @@ function App() {
                 <Route path="/documents/edit/:id" element={<DocumentEditor />} />
               </Routes>
             </ErrorBoundary>
-          </Layout>
-        </Router>
+            </Layout>
+          </Router>
+        </MobileNavigationProvider>
       </RTLProvider>
     </ErrorBoundary>
   );
