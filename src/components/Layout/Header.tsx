@@ -87,30 +87,6 @@ export const Header: React.FC = () => {
           </div>
         </div>
       </div>
-      
-      {/* Quick Stats Bar - Medical Dashboard */}
-      <div className="border-t border-gray-100 bg-gray-50 px-8 py-3">
-        <div className="flex items-center justify-between">
-          <div className="flex items-center gap-8 text-sm">
-            <div className="flex items-center gap-2">
-              <div className="w-2 h-2 bg-blue-500 rounded-full"></div>
-              <span className="text-gray-600">מטופלים פעילים: <span className="font-semibold text-gray-800">0</span></span>
-            </div>
-            <div className="flex items-center gap-2">
-              <div className="w-2 h-2 bg-green-500 rounded-full"></div>
-              <span className="text-gray-600">טיפולים השבוע: <span className="font-semibold text-gray-800">0</span></span>
-            </div>
-            <div className="flex items-center gap-2">
-              <div className="w-2 h-2 bg-purple-500 rounded-full"></div>
-              <span className="text-gray-600">מסמכים חדשים: <span className="font-semibold text-gray-800">0</span></span>
-            </div>
-          </div>
-          
-          <div className="text-xs text-gray-500">
-            עודכן לאחרונה: {new Date().toLocaleDateString('he-IL')}
-          </div>
-        </div>
-      </div>
     </header>
   );
 };
